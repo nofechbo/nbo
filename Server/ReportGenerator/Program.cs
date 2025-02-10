@@ -15,7 +15,8 @@ namespace ReportGenerator
                 Console.WriteLine("2 - Launchers with Failures");
                 Console.WriteLine("3 - Missile Stock Summary");
                 Console.WriteLine("4 - Launchers with Unfixed Failures");
-                Console.WriteLine("5 - Exit");
+                Console.WriteLine("5 - Generate PDF Report");
+                Console.WriteLine("6 - Exit");
                 Console.Write("Enter choice: ");
                 
                 string choice = Console.ReadLine();
@@ -36,6 +37,9 @@ namespace ReportGenerator
                         reportService.GetUnfixedFailures();
                         break;
                     case "5":
+                       reportService.GeneratePdfReport();
+                        break;
+                    case "6":
                         Console.WriteLine("🚀 Exiting...");
                         return;
                     default:
