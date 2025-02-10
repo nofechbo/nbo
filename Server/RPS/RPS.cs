@@ -3,19 +3,25 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Command;
 using MyFactory;
-
+using DataBase;
 
 namespace mainServer
 {
     public class RPS
     {
         private readonly Factory<string, Dictionary<string, string>, ICommand> _commandFactory;
-        private readonly StringParser _parser;
+        private readonly StringParser _parser = new StringParser();
 
-        public RPS(Factory<string, Dictionary<string, string>, ICommand> factory, StringParser parser)
+        public RPS(DatabaseHandler dbHandler)
         {
-            _commandFactory = factory;
-            _parser = parser;
+            if (dbHandler == null) throw new ArgumentNullException(nameof(dbHandler));
+
+            _commandFactory = new Factory<string, Dictionary<string, string>, ICommand>();
+
+            //Inject `DatabaseHandler` into each command
+            _commandFactory.Add("RegUpdate", args => new RegUpdate(args, dbHandler));
+            _commandFactory.Add("SendMissiles", args => new SendMissiles(args, dbHandler));
+            _commandFactory.Add("SendTechnician", args => new SendTechnician(args, dbHandler));
         }
 
         public async Task<ICommand> HandleRequestAsync(string input)
@@ -34,22 +40,19 @@ namespace mainServer
             return await GetCommandAsync(parsedArgs);
         }
 
-        private Task<Dictionary<string, string>> ParseInputAsync(string input)
+        private async Task<Dictionary<string, string>> ParseInputAsync(string input)
         {
-            return Task.Run(() => _parser.Parse(input));
+            return await Task.FromResult(_parser.Parse(input));
         }
 
-        private Task<ICommand> GetCommandAsync(Dictionary<string, string> parsedArgs)
+        private async Task<ICommand> GetCommandAsync(Dictionary<string, string> parsedArgs)
         {
-            return Task.Run(() =>
+            if (!parsedArgs.ContainsKey("command"))
             {
-                if (!parsedArgs.ContainsKey("command"))
-                {
-                    throw new ArgumentException("Missing command in parsed input");
-                }
+                throw new ArgumentException("Missing command in parsed input");
+            }
 
-                return _commandFactory.Create(parsedArgs["command"], parsedArgs);
-            });
+            return await Task.FromResult(_commandFactory.Create(parsedArgs["command"], parsedArgs));
         }
     }
 }

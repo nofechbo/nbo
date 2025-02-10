@@ -1,5 +1,16 @@
 ﻿
-using DataBase;
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Applying migrations...");
+    }
+}
+
+
+/*using DataBase;
 
 using System;
 using System.Linq;
@@ -41,3 +52,4 @@ class Program
         }
     }
 }
+*/

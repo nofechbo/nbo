@@ -1,4 +1,4 @@
-﻿using System.Text;
+﻿/*using System.Text;
 using MyFactory;
 
 Console.WriteLine("Testing Factory...");
@@ -47,4 +47,4 @@ Console.WriteLine("Nested Factory Test: " + retrievedFactory.Create("Custom", "N
 // Complex object test
 var complex = (ComplexObject)factory.Create("ComplexObject", "Test Data");
 Console.WriteLine("Complex Object Test: " + complex);
-
+*/

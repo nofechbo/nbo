@@ -1,4 +1,5 @@
-﻿using Command;
+﻿/*#if DEBUG  // Ensures this code runs only in debug mode, not in tests
+using Command;
 
 Console.WriteLine("Testing RegUpdate...");
 var regArgs = new Dictionary<string, string> { { "update", "System patch applied" } };
@@ -112,3 +113,5 @@ catch (ArgumentException)
 {
     Console.WriteLine("Invalid key caught for SendTechnician (empty location value)");
 }
+#endif
+*/

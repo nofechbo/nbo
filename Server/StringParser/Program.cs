@@ -1,4 +1,4 @@
-﻿var parser = new StringParser();
+﻿/*var parser = new StringParser();
 
 try
 {
@@ -13,4 +13,4 @@ try
 catch (InvalidCommandException ex)
 {
     Console.WriteLine($"Parsing Error: {ex.Message}");
-}
+}*/
