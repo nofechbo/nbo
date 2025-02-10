@@ -1,62 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using DataBase;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-public class ReportService
+namespace DataBase
 {
-    public void GetAllLaunchers()
+    public class MissileDbContext : DbContext
     {
-        using (var db = new MissileDbContext()) 
-        {
-            var launchers = db.MissileLaunchers.ToList();
-            Console.WriteLine("\n🔹 All Missile Launchers:");
-            foreach (var launcher in launchers)
-            {
-                Console.WriteLine($"ID: {launcher.Id}, Code: {launcher.Code}, Location: {launcher.Location}, " +
-                                  $"Missile Type: {launcher.MissileType}, Count: {launcher.MissileCount}, " +
-                                  $"Failures: {launcher.FailureCount}, Fixed: {launcher.FixedFailures}");
-            }
-        }
-    }
+        public DbSet<MissileLauncher> MissileLaunchers { get; set; }
 
-    public void GetLaunchersWithFailures()
-    {
-        using (var db = new MissileDbContext()) 
-        {
-            var failedLaunchers = db.MissileLaunchers
-                .Where(l => l.FailureCount > 0)
-                .OrderByDescending(l => l.FailureCount)
-                .ToList();
-
-            Console.WriteLine("\n🔹 Launchers with Failures:");
-            foreach (var launcher in failedLaunchers)
-            {
-                Console.WriteLine($"ID: {launcher.Id}, Code: {launcher.Code}, Failures: {launcher.FailureCount}");
-            }
-        }
-    }
-
-    public void GetMissileStockSummary()
-    {
-        using (var db = new MissileDbContext()) 
-        {
-            var stockSummary = db.MissileLaunchers
-                .GroupBy(l => l.MissileType)
-                .Select(g => new
-                {
-                    MissileType = g.Key,
-                    TotalMissiles = g.Sum(l => l.MissileCount)
-                })
-                .OrderByDescending(x => x.TotalMissiles)
-                .ToList();
-
-            Console.WriteLine("\n🔹 Missile Stock Summary:");
-            foreach (var stock in stockSummary)
-            {
-                Console.WriteLine($"Missile Type: {stock.MissileType}, Total Missiles: {stock.TotalMissiles}");
-            }
-        }
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+            => options.UseSqlite("Data Source=missiles.db"); // SQLite database file
     }
 }
