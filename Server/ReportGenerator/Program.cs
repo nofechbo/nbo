@@ -1,23 +1,25 @@
 ﻿using System;
 
-
-namespace ReportGenerator {
+namespace ReportGenerator
+{
     class Program
     {
         static void Main()
         {
-            var reportService = new ReportService();
-
+            ReportService reportService = new ReportService();
+            
             while (true)
             {
                 Console.WriteLine("\n📊 Select a Report:");
                 Console.WriteLine("1 - All Missile Launchers");
                 Console.WriteLine("2 - Launchers with Failures");
                 Console.WriteLine("3 - Missile Stock Summary");
-                Console.WriteLine("4 - Exit");
+                Console.WriteLine("4 - Launchers with Unfixed Failures");
+                Console.WriteLine("5 - Exit");
                 Console.Write("Enter choice: ");
-
+                
                 string choice = Console.ReadLine();
+                Console.WriteLine();
 
                 switch (choice)
                 {
@@ -31,10 +33,13 @@ namespace ReportGenerator {
                         reportService.GetMissileStockSummary();
                         break;
                     case "4":
-                        Console.WriteLine("Exiting...");
+                        reportService.GetUnfixedFailures();
+                        break;
+                    case "5":
+                        Console.WriteLine("🚀 Exiting...");
                         return;
                     default:
-                        Console.WriteLine("❌ Invalid choice. Try again.");
+                        Console.WriteLine("❌ Invalid choice, try again.");
                         break;
                 }
             }
