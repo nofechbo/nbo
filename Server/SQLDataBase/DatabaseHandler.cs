@@ -45,5 +45,18 @@ namespace DataBase
                 db.SaveChanges();
             }
         }
+
+        public void IncrementFixedCount(string launcherID)
+        {
+            using (var db = new MissileDbContext())
+            {
+                var launcher = db.MissileLaunchers.FirstOrDefault(l => l.Code == launcherID);
+                if (launcher == null)
+                    throw new Exception($"Launcher with ID {launcherID} not found.");
+
+                launcher.FixedFailures += 1;
+                db.SaveChanges();
+            }
+        }
     }
 }

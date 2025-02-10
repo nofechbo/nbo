@@ -21,7 +21,7 @@ namespace Command
         public void Execute()
         {
             Console.WriteLine($"Technician sent to launcher: {launcherID}");
-            _dbHandler.IncrementFailureCount(launcherID);
+            _dbHandler.IncrementFixedCount(launcherID);
         }
     }
 }
