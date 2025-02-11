@@ -1,4 +1,14 @@
-﻿/*using System;
+﻿/*using Microsoft.Extensions.DependencyInjection;
+
+var services = new ServiceCollection();
+services.AddSingleton<IRpsCommandHandler, RPS>();
+services.AddSingleton<LauncherListener>();
+
+var provider = services.BuildServiceProvider();
+var listener = provider.GetRequiredService<LauncherListener>();
+*/
+
+/*using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Command;

@@ -7,7 +7,7 @@ using DataBase;
 
 namespace mainServer
 {
-    public class RPS
+    public class RPS : IRpsCommandHandler
     {
         private readonly Factory<string, Dictionary<string, string>, ICommand> _commandFactory;
         private readonly StringParser _parser = new StringParser();

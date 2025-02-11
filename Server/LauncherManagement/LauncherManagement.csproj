@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\RPS\RPS.csproj" />
+    <ProjectReference Include="..\SQLDatabase\SQLDatabase.csproj" />
+    <ProjectReference Include="..\Command\Command.csproj" />
+    <ProjectReference Include="..\Launchers\Launchers.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RpsSqlUnitTest.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f9499663ee836dce20fa88995f54b4db40d57843")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bd7713c2321d6efc05d37a21b9a5a864abf45f60")]
 [assembly: System.Reflection.AssemblyProductAttribute("RpsSqlUnitTest.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RpsSqlUnitTest.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
