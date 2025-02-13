@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RPS\RPS.csproj" />
-    <ProjectReference Include="..\Launchers\Launchers.csproj" />
+    <ProjectReference Include="..\LauncherManagement\LauncherManagement.csproj" />
   </ItemGroup>
 
 </Project>

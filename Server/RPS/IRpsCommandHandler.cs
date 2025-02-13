@@ -5,6 +5,6 @@ namespace mainServer
 {
     public interface IRpsCommandHandler
     {
-        Task<ICommand> HandleRequestAsync(string input);
+        Task HandleRequestAsync(string input);
     }
 }

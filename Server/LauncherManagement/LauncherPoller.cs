@@ -4,17 +4,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using mainServer;
-using Launcher;
+using DataBase;
 
 namespace LauncherManagement
 {
     public class LauncherPoller
     {
         private readonly LauncherListener _listener;
-        private readonly HashSet<string> _trackedLaunchers = new(); // Prevents duplicate registrations
+        private readonly HashSet<string> _trackedLaunchers = new();
         private bool _isPolling;
         private Task _pollingTask;
-        private readonly int _pollingIntervalMs = 60000; // 60 seconds (adjustable)
+        private readonly int _pollingIntervalMs = 60000; // 60 seconds
 
         public LauncherPoller(LauncherListener listener)
         {
@@ -33,7 +33,7 @@ namespace LauncherManagement
         public void StopPolling()
         {
             _isPolling = false;
-            _pollingTask?.Wait(); // Wait for the polling loop to exit
+            _pollingTask?.Wait();
             Console.WriteLine("📡 Launcher polling stopped.");
         }
 
@@ -58,7 +58,7 @@ namespace LauncherManagement
             using (var db = new MissileDbContext())
             {
                 var newLaunchers = db.MissileLaunchers
-                    .Select(l => new MissileLauncher(l.Code, l.Location, l.MissileType))
+                    .Select(l => new Launcher(l.Code, l.Location, l.MissileType))
                     .ToList();
 
                 foreach (var launcher in newLaunchers)

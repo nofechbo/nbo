@@ -1,11 +1,10 @@
 using System;
 using DataBase;
 using Microsoft.EntityFrameworkCore;
-using mainServer;
 
-namespace Launcher
+namespace LauncherManagement
 {
-    public class MissileLauncher
+    public class Launcher
     {
         public string Code { get; }
         public string Location { get; }
@@ -13,7 +12,7 @@ namespace Launcher
 
         public event Action<string> MalfunctionOccurred;
 
-        public MissileLauncher(string code, string location, string missileType)
+        public Launcher(string code, string location, string missileType)
         {
             Code = code;
             Location = location;
@@ -33,7 +32,7 @@ namespace Launcher
                 // Check if the launcher is already in the DB
                 if (!db.MissileLaunchers.Any(l => l.Code == Code))
                 {
-                    db.MissileLaunchers.Add(new MissileLauncherEntity
+                    db.MissileLaunchers.Add(new MissileLauncher
                     {
                         Code = Code,
                         Location = Location,

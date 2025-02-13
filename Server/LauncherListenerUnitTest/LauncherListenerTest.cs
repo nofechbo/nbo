@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Moq;
 using mainServer;
-using Launcher;
 using LauncherManagement;
 
 [TestFixture]
@@ -15,12 +14,11 @@ public class LauncherListenerTests
     private Mock<IRpsCommandHandler> _mockRpsHandler;
     private LauncherListener _launcherListener;
     private LauncherPoller _poller;
-    private CancellationTokenSource _cts;
 
     [SetUp]
     public void Setup()
     {
-        // ✅ Set up Dependency Injection
+        // Set up Dependency Injection
         var services = new ServiceCollection();
         _mockRpsHandler = new Mock<IRpsCommandHandler>();
 
@@ -32,27 +30,25 @@ public class LauncherListenerTests
         _launcherListener = _serviceProvider.GetRequiredService<LauncherListener>();
         _poller = _serviceProvider.GetRequiredService<LauncherPoller>();
 
-        // ✅ Start polling in the background
-        _cts = new CancellationTokenSource();
-        Task.Run(() => _poller.StartPolling(_cts.Token));
+        _poller.StartPolling();
     }
 
     [Test]
     public async Task Polling_ShouldDetectNewLaunchers_AndHandleMalfunctions()
     {
-        // ✅ Create a new launcher (simulating external addition)
-        var launcher = new MissileLauncher("L002", "Base B", "Type-Y");
+        // Create a new launcher (simulating external addition)
+        var launcher = new Launcher("L002", "Base B", "Type-Y");
 
-        // ✅ Simulate polling detecting the new launcher
-        _poller.AddLauncher(launcher); // This should be a thread-safe method in LauncherPoller
+        // Register the launcher manually
+        _launcherListener.RegisterLauncher(launcher);
 
-        // ✅ Wait a moment to let the polling cycle detect it
+        // Wait briefly to allow polling to process
         await Task.Delay(500);
 
-        // ✅ Simulate malfunction
+        // Simulate malfunction
         launcher.AlertMalfunction();
 
-        // ✅ Verify RPS received the correct command
+        // Verify RPS received the correct command
         _mockRpsHandler.Verify(
             rps => rps.HandleRequestAsync("SendTechnician:L002"),
             Times.Once);
@@ -63,7 +59,7 @@ public class LauncherListenerTests
     [TearDown]
     public void Cleanup()
     {
-        _cts.Cancel(); // ✅ Stop the polling loop
+        _poller.StopPolling(); 
         _serviceProvider?.Dispose();
     }
 }

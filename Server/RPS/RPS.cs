@@ -24,7 +24,7 @@ namespace mainServer
             _commandFactory.Add("SendTechnician", args => new SendTechnician(args, dbHandler));
         }
 
-        public async Task<ICommand> HandleRequestAsync(string input)
+        public async Task HandleRequestAsync(string input)
         {
             Dictionary<string, string> parsedArgs;
             try
@@ -37,7 +37,15 @@ namespace mainServer
                 throw new ArgumentException("Parsing failed", ex);
             }
 
-            return await GetCommandAsync(parsedArgs);
+            ICommand command = await GetCommandAsync(parsedArgs);
+            if (command != null)
+            {
+                command.Execute();
+            } else {
+                throw new InvalidOperationException($"❌ RPS: Command creation failed for {input}");
+            }
+
+
         }
 
         private async Task<Dictionary<string, string>> ParseInputAsync(string input)
@@ -51,7 +59,6 @@ namespace mainServer
             {
                 throw new ArgumentException("Missing command in parsed input");
             }
-
             return await Task.FromResult(_commandFactory.Create(parsedArgs["command"], parsedArgs));
         }
     }

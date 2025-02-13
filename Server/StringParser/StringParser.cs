@@ -8,7 +8,7 @@ public class StringParser
     {
         var argsMap = new Dictionary<string, string>();
 
-        var parts = input.Split(":", 2); // Ensure we split only at the first colon
+        var parts = input.Split(":", 2); 
 
         if (parts.Length < 2 || string.IsNullOrWhiteSpace(parts[0]) || string.IsNullOrWhiteSpace(parts[1]))
         {
@@ -30,8 +30,6 @@ public class StringParser
         return argsMap;
     }
 }
-
-
 
 
 

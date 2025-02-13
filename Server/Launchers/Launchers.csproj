@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SQLDatabase\SQLDatabase.csproj" />
-    <ProjectReference Include="..\LauncherManagement\LauncherManagement.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
