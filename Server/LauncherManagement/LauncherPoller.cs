@@ -14,7 +14,7 @@ namespace LauncherManagement
         private readonly HashSet<string> _trackedLaunchers = new();
         private bool _isPolling;
         private Task _pollingTask;
-        private readonly int _pollingIntervalMs = 60000; // 60 seconds
+        private readonly int _pollingIntervalMs = 500;
 
         public LauncherPoller(LauncherListener listener)
         {

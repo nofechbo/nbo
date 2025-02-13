@@ -22,7 +22,7 @@ namespace Command
 
         public void Execute()
         {
-            Console.WriteLine($"Update received for launcher: {launcherID}, info: {info}");
+            Console.WriteLine($"🔄 Update received for launcher: {launcherID}, info: {info}");
             _dbHandler.UpdateLauncherStatus(launcherID, info);
         }
     }

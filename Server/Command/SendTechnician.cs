@@ -20,7 +20,7 @@ namespace Command
 
         public void Execute()
         {
-            Console.WriteLine($"Technician sent to launcher: {launcherID}");
+            Console.WriteLine($"👨‍🔧 Technician sent to launcher: {launcherID}");
             _dbHandler.IncrementFixedCount(launcherID);
         }
     }

@@ -22,7 +22,7 @@ namespace Command
 
         public void Execute()
         {
-            Console.WriteLine($"Missiles supply sent to launcher: {launcherID}, missiles sent: {missiles}");
+            Console.WriteLine($"🚀Missiles supply sent to launcher: {launcherID}, missiles sent: {missiles}");
             _dbHandler.UpdateMissileCount(launcherID, missiles);
         }
     }

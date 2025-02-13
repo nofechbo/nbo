@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LauncherListenerUnitTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e16e8eabba466b93c5ad7ddaba0e738d14c706e0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1574d710a00c9f3e358826b5a72b493696519be0")]
 [assembly: System.Reflection.AssemblyProductAttribute("LauncherListenerUnitTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LauncherListenerUnitTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
