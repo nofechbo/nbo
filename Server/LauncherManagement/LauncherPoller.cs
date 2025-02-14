@@ -14,7 +14,7 @@ namespace LauncherManagement
         private bool _isPolling;
         private Task _pollingTask;
         private readonly int _pollingIntervalMs = 500;
-         private readonly DatabaseHandler _dbHandler;  // Add DatabaseHandler to be injected
+         private readonly DatabaseHandler _dbHandler; 
 
         public LauncherPoller(LauncherListener listener, DatabaseHandler dbHandler)
         {

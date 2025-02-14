@@ -20,9 +20,9 @@ namespace MyRPS
             _commandFactory = new Factory<string, Dictionary<string, string>, ICommand>();
 
             //Inject `DatabaseHandler` into each command
-            _commandFactory.Add("UpdateLocation", args => new UpdateLocation(args, dbHandler));
-            _commandFactory.Add("SendMissiles", args => new SendMissiles(args, dbHandler));
-            _commandFactory.Add("SendTechnician", args => new SendTechnician(args, dbHandler));
+            _commandFactory.Add("UpdateLocation", args => new UpdateLocation(args!, dbHandler));
+            _commandFactory.Add("SendMissiles", args => new SendMissiles(args!, dbHandler));
+            _commandFactory.Add("SendTechnician", args => new SendTechnician(args!, dbHandler));
         }
 
         public async Task<string> HandleRequestAsync(string input)
