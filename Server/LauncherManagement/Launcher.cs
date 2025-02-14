@@ -9,45 +9,40 @@ namespace LauncherManagement
         public string Code { get; }
         public string Location { get; }
         public string MissileType { get; }
+        private readonly DatabaseHandler _dbHandler;
 
         public event Action<string> MalfunctionOccurred;
 
-        public Launcher(string code, string location, string missileType)
+        public Launcher(string code, string location, string missileType, DatabaseHandler dbHandler)
         {
             Code = code;
             Location = location;
             MissileType = missileType;
+            _dbHandler = dbHandler ?? throw new ArgumentNullException(nameof(dbHandler));
         }
 
         public void AlertMalfunction()
         {
             Console.WriteLine($"🚨 Malfunction detected in launcher {Code} at {Location}!");
             MalfunctionOccurred?.Invoke(Code);
+
+            // Update the malfunction count in the database
+            _dbHandler.IncrementFailureCount(Code);
         }
 
         public void RegisterNewLauncher()
         {
-            using (var db = new MissileDbContext())
+            var existingLauncher = _dbHandler.GetLauncherByCode(Code);
+            if (existingLauncher == null)
             {
-                // Check if the launcher is already in the DB
-                if (!db.MissileLaunchers.Any(l => l.Code == Code))
-                {
-                    db.MissileLaunchers.Add(new MissileLauncher
-                    {
-                        Code = Code,
-                        Location = Location,
-                        MissileType = MissileType,
-                        MissileCount = 10, //default
-                        FailureCount = 0,
-                        FixedFailures = 0
-                    });
-                    db.SaveChanges();
-                    Console.WriteLine($"✅ Launcher {Code} added to the database.");
-                }
-                else
-                {
-                    Console.WriteLine($"⚠️ Launcher {Code} already exists in the database.");
-                }
+                // Launcher does not exist, so add it
+                _dbHandler.AddNewLauncher(Code, Location, MissileType); // Add the new launcher to DB
+                Console.WriteLine($"✅ Launcher {Code} added to the database.");
+            }
+            else
+            {
+                // Launcher already exists
+                Console.WriteLine($"⚠️ Launcher {Code} already exists in the database.");
             }
         }
     }

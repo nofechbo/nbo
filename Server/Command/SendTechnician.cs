@@ -18,10 +18,10 @@ namespace Command
             _dbHandler = dbHandler ?? throw new ArgumentNullException(nameof(dbHandler));
         }
 
-        public void Execute()
+        public string Execute()
         {
-            Console.WriteLine($"👨‍🔧 Technician sent to launcher: {launcherID}");
             _dbHandler.IncrementFixedCount(launcherID);
+            return $"👨‍🔧 Technician sent to launcher: {launcherID}";
         }
     }
 }

@@ -5,6 +5,6 @@ namespace MyRPS
 {
     public interface IRpsCommandHandler
     {
-        Task HandleRequestAsync(string input);
+        Task<string> HandleRequestAsync(string input);
     }
 }

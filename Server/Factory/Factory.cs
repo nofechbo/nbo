@@ -13,7 +13,7 @@
         {
             if (!creators.TryGetValue(key, out var func))
             {
-                throw new ArgumentException($"No method is registered for key {key}");
+                throw new ArgumentException($"No command found for key {key}");
             }
             return func(param);
         }

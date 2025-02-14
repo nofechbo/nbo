@@ -20,10 +20,10 @@ namespace Command
             _dbHandler = dbHandler ?? throw new ArgumentNullException(nameof(dbHandler));
         }
 
-        public void Execute()
+        public string Execute()
         {
-            Console.WriteLine($"🚀Missiles supply sent to launcher: {launcherID}, missiles sent: {missiles}");
             _dbHandler.UpdateMissileCount(launcherID, missiles);
+            return $"🚀Missiles supply sent to launcher: {launcherID}, missiles sent: {missiles}";
         }
     }
 }

@@ -20,26 +20,16 @@ namespace MyRPS
             _commandFactory = new Factory<string, Dictionary<string, string>, ICommand>();
 
             //Inject `DatabaseHandler` into each command
-            _commandFactory.Add("RegUpdate", args => new RegUpdate(args, dbHandler));
+            _commandFactory.Add("UpdateLocation", args => new UpdateLocation(args, dbHandler));
             _commandFactory.Add("SendMissiles", args => new SendMissiles(args, dbHandler));
             _commandFactory.Add("SendTechnician", args => new SendTechnician(args, dbHandler));
         }
 
-        public async Task HandleRequestAsync(string input)
+        public async Task<string> HandleRequestAsync(string input)
         {
-            try
-            {
-                Dictionary<string, string> parsedArgs = await ParseInputAsync(input); // Parsing input
-                ICommand command = await GetCommandAsync(parsedArgs); // Create command
-                
-                // Execute command if creation is successful
-                command.Execute();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"❌ Error: {ex.Message}");
-            }
-
+            Dictionary<string, string> parsedArgs = await ParseInputAsync(input);
+            ICommand command = await GetCommandAsync(parsedArgs);
+            return command.Execute();
         }
 
         private async Task<Dictionary<string, string>> ParseInputAsync(string input)

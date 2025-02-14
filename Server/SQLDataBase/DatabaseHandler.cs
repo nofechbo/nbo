@@ -7,56 +7,71 @@ namespace DataBase
 {
     public class DatabaseHandler
     {
-        public void UpdateLauncherStatus(string launcherID, string info)
-        {
-            using (var db = new MissileDbContext())
-            {
-                var launcher = db.MissileLaunchers.FirstOrDefault(l => l.Code == launcherID);
-                if (launcher == null)
-                    throw new Exception($"Launcher with ID {launcherID} not found.");
+         private readonly MissileDbContext _dbContext;
 
-                launcher.Location = info; // Assuming "info" contains a location update
-                db.SaveChanges();
-            }
+        public DatabaseHandler(MissileDbContext dbContext)
+        {
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        }
+        
+        public MissileLauncher GetLauncherByCode(string launcherCode)
+        {
+            return _dbContext.MissileLaunchers.FirstOrDefault(l => l.Code == launcherCode);
         }
 
-        public void UpdateMissileCount(string launcherID, int missilesFired)
+        public void AddNewLauncher(string code, string location, string missileType)
         {
-            using (var db = new MissileDbContext())
+            _dbContext.MissileLaunchers.Add(new MissileLauncher
             {
-                var launcher = db.MissileLaunchers.FirstOrDefault(l => l.Code == launcherID);
-                if (launcher == null)
-                    throw new Exception($"Launcher with ID {launcherID} not found.");
-
-                launcher.MissileCount = Math.Max(0, launcher.MissileCount - missilesFired); // Ensure count is non-negative
-                db.SaveChanges();
+                Code = code,
+                Location = location,
+                MissileType = missileType,
+                MissileCount = 10,  // default
+                FailureCount = 0,
+                FixedFailures = 0
+            });
+            _dbContext.SaveChanges();
+        }
+        
+        public void UpdateLauncherLocation(string launcherCode, string info)
+        {
+            var launcher = _dbContext.MissileLaunchers.FirstOrDefault(l => l.Code == launcherCode);
+            if (launcher == null) {
+                throw new Exception($"Launcher with ID {launcherCode} not found.");
             }
+            launcher.Location = info;
+            _dbContext.SaveChanges();
         }
 
-        public void IncrementFailureCount(string launcherID)
+        public void UpdateMissileCount(string launcherCode, int missilesFired)
         {
-            using (var db = new MissileDbContext())
-            {
-                var launcher = db.MissileLaunchers.FirstOrDefault(l => l.Code == launcherID);
-                if (launcher == null)
-                    throw new Exception($"Launcher with ID {launcherID} not found.");
-
-                launcher.FailureCount += 1;
-                db.SaveChanges();
+            var launcher = _dbContext.MissileLaunchers.FirstOrDefault(l => l.Code == launcherCode);
+            if (launcher == null){
+                throw new Exception($"Launcher with ID {launcherCode} not found.");
             }
+            launcher.MissileCount = Math.Max(0, launcher.MissileCount - missilesFired); // Ensure count is non-negative
+            _dbContext.SaveChanges();
+
         }
 
-        public void IncrementFixedCount(string launcherID)
+        public void IncrementFailureCount(string launcherCode)
         {
-            using (var db = new MissileDbContext())
-            {
-                var launcher = db.MissileLaunchers.FirstOrDefault(l => l.Code == launcherID);
-                if (launcher == null)
-                    throw new Exception($"Launcher with ID {launcherID} not found.");
-
-                launcher.FixedFailures += 1;
-                db.SaveChanges();
+            var launcher = _dbContext.MissileLaunchers.FirstOrDefault(l => l.Code == launcherCode);
+            if (launcher == null){
+                throw new Exception($"Launcher with ID {launcherCode} not found.");
             }
+            launcher.FailureCount += 1;
+            _dbContext.SaveChanges();
+        }
+
+        public void IncrementFixedCount(string launcherCode)
+        {
+            var launcher = _dbContext.MissileLaunchers.FirstOrDefault(l => l.Code == launcherCode);
+            if (launcher == null){
+                throw new Exception($"Launcher with ID {launcherCode} not found.");
+            }
+            launcher.FixedFailures += 1;
+            _dbContext.SaveChanges();
         }
     }
 }

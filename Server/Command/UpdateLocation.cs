@@ -4,26 +4,26 @@ using DataBase;
 
 namespace Command
 {
-    public class RegUpdate : ICommand
+    public class UpdateLocation : ICommand
     {
         private readonly string launcherID;
-        private readonly string info;
+        private readonly string location;
         private readonly DatabaseHandler _dbHandler;
 
-        public RegUpdate(Dictionary<string, string> args, DatabaseHandler dbHandler)
+        public UpdateLocation(Dictionary<string, string> args, DatabaseHandler dbHandler)
         {
             if (!args.TryGetValue("launcherID", out launcherID!) || string.IsNullOrWhiteSpace(launcherID) ||
-                !args.TryGetValue("info", out info!) || string.IsNullOrWhiteSpace(info))
+                !args.TryGetValue("info", out location!) || string.IsNullOrWhiteSpace(location))
             {
                 throw new ArgumentException("Invalid arguments for RegUpdate");
             }
             _dbHandler = dbHandler ?? throw new ArgumentNullException(nameof(dbHandler));
         }
 
-        public void Execute()
+        public string Execute()
         {
-            Console.WriteLine($"🔄 Update received for launcher: {launcherID}, info: {info}");
-            _dbHandler.UpdateLauncherStatus(launcherID, info);
+            _dbHandler.UpdateLauncherLocation(launcherID, location);
+            return $"🔄 Update received for launcher: {launcherID}, new location: {location}";
         }
     }
 }

@@ -2,76 +2,27 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
+using MyRPS;
 
 namespace tcp
 {
-    class SimpleTcpServer
-    {
-        static void Main()
-        {
-            int port = 12345;
-            TcpListener listener = new TcpListener(IPAddress.Any, port);
-            listener.Start();
-            Console.WriteLine("Server is listening on port " + port);
-
-            while (true)
-            {
-                // Accept incoming client connections
-                TcpClient client = listener.AcceptTcpClient();
-                Console.WriteLine("Client connected");
-
-                // Get the network stream
-                NetworkStream stream = client.GetStream();
-                byte[] data = new byte[256];
-                int bytesRead;
-
-                // Keep the connection open for multiple messages
-                while ((bytesRead = stream.Read(data, 0, data.Length)) != 0)
-                {
-                    string message = Encoding.ASCII.GetString(data, 0, bytesRead);
-                    Console.WriteLine("Received: " + message);
-
-                    // If the client sends "exit", break the loop to end the communication
-                    if (message.ToLower() == "exit")
-                    {
-                        Console.WriteLine("Client requested to close the connection. Sending 'exit' to client.");
-                        break;
-                    }
-
-                    // Echo the received message back to the client
-                    stream.Write(data, 0, bytesRead);
-                }
-
-                // After finishing communication, send "exit" to the client to close the connection
-                string exitMessage = "exit";
-                byte[] exitData = Encoding.ASCII.GetBytes(exitMessage);
-                stream.Write(exitData, 0, exitData.Length);
-                Console.WriteLine("Sent 'exit' to the client");
-
-                // Close the client connection
-                client.Close();
-                Console.WriteLine("Client disconnected");
-            }
-        }
-    }
-
-    
-    
-    /*public class TcpServer
+    public class TcpServer
     {
         private readonly RPS _rps;
         private readonly TcpListener _listener;
+        private const int Port = 12345;
 
-        public TcpServer(int port, RPS rps)
+        public TcpServer(RPS rps)
         {
             _rps = rps;
-            _listener = new TcpListener(IPAddress.Any, port);
+            _listener = new TcpListener(IPAddress.Any, Port);
         }
 
         public async Task StartAsync()
         {
             _listener.Start();
-            Console.WriteLine("TCP Server started...");
+            Console.WriteLine("Server is listening on port " + Port);
 
             while (true)
             {
@@ -82,20 +33,52 @@ namespace tcp
 
         private async Task HandleClientAsync(TcpClient client)
         {
-            using NetworkStream stream = client.GetStream();
-            byte[] buffer = new byte[1024];
+            using var stream = client.GetStream();
+            var buffer = new byte[256];
+            bool exitRequested = false;
 
-            int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
-            if (bytesRead == 0) return;
+            while (!exitRequested)
+            {
+                int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
+                if (bytesRead == 0) {
+                    break;
+                }
 
-            string requestString = Encoding.UTF8.GetString(buffer, 0, bytesRead).Trim();
-            Console.WriteLine($"Received: {requestString}");
+                string request = Encoding.UTF8.GetString(buffer, 0, bytesRead).Trim();
+                Console.WriteLine($"Received request: {request}");
 
-            string response = await _rps.ProcessRequestAsync(requestString);
-            byte[] responseBytes = Encoding.UTF8.GetBytes(response);
-
-            await stream.WriteAsync(responseBytes, 0, responseBytes.Length);
-            Console.WriteLine($"Sent: {response}");
+                try
+                {
+                    // Check if client requested to exit
+                    if (request.ToLower() == "exit")
+                    {
+                        await SendExitMessage(stream, client);
+                        exitRequested = true;
+                    }
+                    else {
+                        string response = await _rps.HandleRequestAsync(request);
+                        byte[] responseBytes = Encoding.UTF8.GetBytes(response);
+                        await stream.WriteAsync(responseBytes, 0, responseBytes.Length);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Handle exceptions thrown by RPS and send error response
+                    string errorResponse = $"Error: {ex.Message}";
+                    byte[] errorBytes = Encoding.UTF8.GetBytes(errorResponse);
+                    await stream.WriteAsync(errorBytes, 0, errorBytes.Length);
+                }
+            }
+            
+            client.Close();
         }
-    }*/
+
+        private async Task SendExitMessage(NetworkStream stream, TcpClient client)
+        {
+            string exitMessage = "exit";
+            byte[] exitBytes = Encoding.UTF8.GetBytes(exitMessage);
+            await stream.WriteAsync(exitBytes, 0, exitBytes.Length);
+            Console.WriteLine("Server sent 'exit'. Closing the connection.");
+        }
+    }
 }
