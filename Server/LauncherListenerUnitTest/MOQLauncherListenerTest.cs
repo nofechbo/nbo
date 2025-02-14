@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Moq;
-using mainServer;
+using MyRPS;
 using LauncherManagement;
 
 [TestFixture]

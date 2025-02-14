@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Command;
 
-namespace mainServer
+namespace MyRPS
 {
     public interface IRpsCommandHandler
     {

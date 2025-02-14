@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using mainServer;
 using DataBase;
 
 namespace LauncherManagement
@@ -67,11 +66,38 @@ namespace LauncherManagement
                     {
                         _trackedLaunchers.Add(launcher.Code);
                         _listener.RegisterLauncher(launcher);
+
+                        Task.Delay(500).Wait();
                         Console.WriteLine($"📡 New launcher registered: {launcher.Code}");
                     }
                 }
             }
         }
+
+
+        public void RemoveLauncher(string launcherCode)
+        {
+            using (var db = new MissileDbContext())
+            {
+                // Find the launcher by its code
+                var launcher = db.MissileLaunchers.FirstOrDefault(l => l.Code == launcherCode);
+
+                if (launcher != null)
+                {
+                    // Remove the launcher from the DbSet
+                    db.MissileLaunchers.Remove(launcher);
+                    // Save changes to the database
+                    db.SaveChanges();
+
+                    Console.WriteLine($"✅ Launcher {launcherCode} removed from the database.");
+                }
+                else
+                {
+                    Console.WriteLine($"⚠️ Launcher with code {launcherCode} not found in the database.");
+                }
+            }
+        }
+
     }
 }
 

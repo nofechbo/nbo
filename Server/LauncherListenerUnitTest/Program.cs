@@ -2,41 +2,47 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using LauncherManagement;
-using mainServer;
+using MyRPS;
 using DataBase;
 
-// ✅ 1. Set up Dependency Injection
-var services = new ServiceCollection();
+// Set up Dependency Injection
+ServiceCollection services = new ServiceCollection();
 services.AddSingleton<DatabaseHandler>();
 services.AddSingleton<IRpsCommandHandler, RPS>();
 services.AddSingleton<LauncherListener>();
-services.AddSingleton<LauncherPoller>();
+services.AddSingleton<LauncherPoller>(serviceProvider => 
+    new LauncherPoller(serviceProvider.GetRequiredService<LauncherListener>()) // Ensure poller receives listener
+);
 
 using var serviceProvider = services.BuildServiceProvider();
-var launcherListener = serviceProvider.GetRequiredService<LauncherListener>();
-var poller = serviceProvider.GetRequiredService<LauncherPoller>();
+LauncherListener launcherListener = serviceProvider.GetRequiredService<LauncherListener>();
+LauncherPoller poller = serviceProvider.GetRequiredService<LauncherPoller>();
 
 Console.WriteLine("🔄 System initialized. Starting launcher polling...");
 
-// ✅ 2. Start monitoring
+// Start monitoring
 poller.StartPolling();
 
-// ✅ 3. Register a new launcher
-var launcher = new Launcher("L002", "Base B", "Type-Y");
-launcherListener.RegisterLauncher(launcher);
-Console.WriteLine($"🆕 Launcher {launcher.Code} registered and being monitored.");
-
-// ✅ 4. Allow time for polling to process
+// Register a new launcher
+poller.RemoveLauncher("L001");
 await Task.Delay(500);
 
-// ✅ 5. Simulate a malfunction
-Console.WriteLine($"🚨 Malfunction in Launcher {launcher.Code}!");
+Launcher launcher = new Launcher("L001", "Base B", "Type-Y");
+launcher.RegisterNewLauncher();
+launcherListener.RegisterLauncher(launcher); ////
+await Task.Delay(1000);
+Launcher launcher2 = new Launcher("L002", "Base AB", "Type-X");
+launcher2.RegisterNewLauncher();
+await Task.Delay(1000);
+
+// Simulate a malfunction
+Console.WriteLine($"🚨 Malfunction from Launcher {launcher.Code}!");
 launcher.AlertMalfunction();
 
-// ✅ 6. Allow system time to process the malfunction and send technician
+// Allow system time to process the malfunction and send technician
 await Task.Delay(500);
 
-// ✅ 7. Stop polling and cleanup
+// Stop polling and cleanup
 Console.WriteLine("🛑 Stopping polling...");
 poller.StopPolling();
 

@@ -5,7 +5,7 @@ using Command;
 using DataBase;
 using Moq;
 using NUnit.Framework;
-using mainServer;
+using MyRPS;
 
 namespace RpsSql.Tests
 {

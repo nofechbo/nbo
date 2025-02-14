@@ -5,7 +5,7 @@ using Command;
 using MyFactory;
 using DataBase;
 
-namespace mainServer
+namespace MyRPS
 {
     public class RPS : IRpsCommandHandler
     {
@@ -14,8 +14,9 @@ namespace mainServer
 
         public RPS(DatabaseHandler dbHandler)
         {
-            if (dbHandler == null) throw new ArgumentNullException(nameof(dbHandler));
-
+            if (dbHandler == null) {
+                throw new ArgumentNullException(nameof(dbHandler));
+            }
             _commandFactory = new Factory<string, Dictionary<string, string>, ICommand>();
 
             //Inject `DatabaseHandler` into each command
@@ -26,25 +27,18 @@ namespace mainServer
 
         public async Task HandleRequestAsync(string input)
         {
-            Dictionary<string, string> parsedArgs;
             try
             {
-                parsedArgs = await ParseInputAsync(input);
+                Dictionary<string, string> parsedArgs = await ParseInputAsync(input); // Parsing input
+                ICommand command = await GetCommandAsync(parsedArgs); // Create command
+                
+                // Execute command if creation is successful
+                command.Execute();
             }
             catch (Exception ex)
             {
-                Console.WriteLine("invalid request");
-                throw new ArgumentException("Parsing failed", ex);
+                Console.WriteLine($"❌ Error: {ex.Message}");
             }
-
-            ICommand command = await GetCommandAsync(parsedArgs);
-            if (command != null)
-            {
-                command.Execute();
-            } else {
-                throw new InvalidOperationException($"❌ RPS: Command creation failed for {input}");
-            }
-
 
         }
 

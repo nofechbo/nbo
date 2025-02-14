@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using mainServer;
+using MyRPS;
 
 namespace LauncherManagement
 {
@@ -10,7 +10,6 @@ namespace LauncherManagement
         public event Action<string> OnMalfunctionDetected;
         private readonly List<Launcher> _launchers = new();
 
-        // Inject RPS via Dependency Injection
         public LauncherListener(IRpsCommandHandler rps)
         {
             _rps = rps;
@@ -31,10 +30,7 @@ namespace LauncherManagement
         {
             Console.WriteLine($"🚨 Malfunction detected on launcher {launcherCode}. Sending technician request...");
             string command = $"SendTechnician:{launcherCode}, Error579";
-
-            // Use RPS to execute the command
             await _rps.HandleRequestAsync(command);
-
             // Fire event for additional listeners
             OnMalfunctionDetected?.Invoke(command);
         }
