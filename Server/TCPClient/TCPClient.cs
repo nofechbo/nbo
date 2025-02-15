@@ -2,10 +2,6 @@ using System;
 using System.Net.Sockets;
 using System.Text;
 
-using System;
-using System.Net.Sockets;
-using System.Text;
-
 namespace tcp
 {
     class SimpleTcpClient
@@ -31,7 +27,7 @@ namespace tcp
                 while (true)
                 {
                     Console.Write("You: ");
-                    string message = Console.ReadLine();
+                    string message = Console.ReadLine()!;
 
                     // Send message to the server
                     byte[] data = Encoding.UTF8.GetBytes(message);

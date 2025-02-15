@@ -19,7 +19,7 @@ namespace ReportGenerator
                 Console.WriteLine("6 - Exit");
                 Console.Write("Enter choice: ");
                 
-                string choice = Console.ReadLine();
+                string choice = Console.ReadLine()!;
                 Console.WriteLine();
 
                 switch (choice)

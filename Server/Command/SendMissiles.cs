@@ -13,7 +13,8 @@ namespace Command
         public SendMissiles(Dictionary<string, string> args, DatabaseHandler dbHandler)
         {
             if (!args.TryGetValue("launcherID", out launcherID!) || string.IsNullOrWhiteSpace(launcherID) ||
-                !args.TryGetValue("info", out string missileCountStr) || !int.TryParse(missileCountStr, out missiles))
+                !args.TryGetValue("info", out string? missileCountStr) || string.IsNullOrWhiteSpace(missileCountStr)
+                || !int.TryParse(missileCountStr, out missiles))
             {
                 throw new ArgumentException("Invalid arguments for SendMissiles");
             }
