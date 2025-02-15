@@ -21,7 +21,11 @@ namespace tcp
                 TcpClient client = new TcpClient(serverIp, port);
                 NetworkStream stream = client.GetStream();
 
-                Console.WriteLine("Connected to the server. Type commands to send.");
+                string intro = "welcome to the launchers management system!\n" +
+                                "you can use the following commands:\n   🔄\"UpdateLocation\"\n   🚀\"SendMissiles\"\n   👨‍🔧\"SendTechnician\"\n" +
+                                "\nplease type in your requests in the following format:\n" +
+                                "     command:launcher code,info";
+                Console.WriteLine(intro);
 
                 // Continuously send messages to the server
                 while (true)

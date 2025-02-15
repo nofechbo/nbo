@@ -7,7 +7,7 @@ namespace LauncherManagement
     public class LauncherListener
     {
         private readonly IRpsCommandHandler _rps;
-        public event Action<string> OnMalfunctionDetected;
+        public event Action<string>? OnMalfunctionDetected;
         private readonly List<Launcher> _launchers = new();
 
         public LauncherListener(IRpsCommandHandler rps)
@@ -30,9 +30,10 @@ namespace LauncherManagement
         {
             Console.WriteLine($"🚨 Malfunction detected on launcher {launcherCode}. Sending technician request...");
             string command = $"SendTechnician:{launcherCode}, Error579";
-            await _rps.HandleRequestAsync(command);
+            string response = await _rps.HandleRequestAsync(command);
             // Fire event for additional listeners
             OnMalfunctionDetected?.Invoke(command);
+            Console.WriteLine(response);
         }
     }
 }

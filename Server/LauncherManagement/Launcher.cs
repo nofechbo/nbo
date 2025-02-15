@@ -11,7 +11,7 @@ namespace LauncherManagement
         public string MissileType { get; }
         private readonly DatabaseHandler _dbHandler;
 
-        public event Action<string> MalfunctionOccurred;
+        public event Action<string>? MalfunctionOccurred;
 
         public Launcher(string code, string location, string missileType, DatabaseHandler dbHandler)
         {

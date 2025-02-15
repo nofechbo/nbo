@@ -144,7 +144,7 @@ namespace ReportGenerator
             }
         }
 
-         public void GeneratePdfReport()
+        public void GeneratePdfReport()
         {
             QuestPDF.Settings.License = LicenseType.Community;
             var filePath = "MissileReport.pdf";
@@ -157,48 +157,101 @@ namespace ReportGenerator
                 {
                     container.Page(page =>
                     {
-                        page.Size(PageSizes.A4);
-                        page.Margin(30);
-                        page.Header().AlignCenter().Text($"Missile Launcher Report - {DateTime.Now}\n").FontSize(18).Bold();
+                        // Set landscape orientation
+                        page.Size(PageSizes.A4.Landscape());
+                        page.Margin(40);
 
-                        page.Content().Table(table =>
+                        // Header with logo and system name
+                        page.Header().Column(col =>
                         {
+                            // Adjusted for landscape - put logo and title in a row
+                            col.Item().Row(row =>
+                            {
+                                row.RelativeItem().AlignCenter().Height(80)
+                                    .Image("rocket-launcher-logo-B51C8CAE2E-seeklogo.com.png", ImageScaling.FitArea);
+                                
+                                row.RelativeItem().Column(titleCol =>
+                                {
+                                    titleCol.Item().Text("Launcher Management System LTD")
+                                        .FontSize(24)
+                                        .Bold()
+                                        .FontColor(Colors.Blue.Darken2)
+                                        .AlignCenter();
+
+                                    titleCol.Item().Text("System Status Report")
+                                        .FontSize(14)
+                                        .FontColor(Colors.Grey.Darken1)
+                                        .AlignCenter();
+
+                                    titleCol.Item().PaddingTop(5)
+                                        .Text($"Generated on: {DateTime.Now:MMMM dd, yyyy HH:mm}")
+                                        .FontSize(10)
+                                        .FontColor(Colors.Grey.Medium)
+                                        .AlignCenter();
+                                });
+                            });
+                        });
+
+                        // Add spacing and table - optimized for landscape
+                        page.Content().PaddingTop(20).Table(table =>
+                        {
+                            // Adjusted column widths for landscape
                             table.ColumnsDefinition(columns =>
                             {
-                                columns.ConstantColumn(30);
-                                columns.RelativeColumn();
-                                columns.RelativeColumn();
-                                columns.RelativeColumn();
-                                columns.RelativeColumn();
-                                columns.RelativeColumn();
-                                columns.RelativeColumn();
+                                columns.ConstantColumn(50);     // ID
+                                columns.RelativeColumn(3);      // Code
+                                columns.RelativeColumn(4);      // Location
+                                columns.RelativeColumn(4);      // Missile Type
+                                columns.RelativeColumn(2);      // Count
+                                columns.RelativeColumn(2);      // Failures
+                                columns.RelativeColumn(2);      // Fixed
                             });
 
+                            // Enhanced header style
                             table.Header(header =>
                             {
-                                header.Cell().Text("ID").Bold();
-                                header.Cell().Text("Code").Bold();
-                                header.Cell().Text("Location").Bold();
-                                header.Cell().Text("Missile Type").Bold();
-                                header.Cell().Text("Count").Bold();
-                                header.Cell().Text("Failures").Bold();
-                                header.Cell().Text("Fixed Failures").Bold();
+                                header.Cell().Background(Colors.Grey.Lighten3).Padding(5).Text("ID").Bold();
+                                header.Cell().Background(Colors.Grey.Lighten3).Padding(5).Text("Code").Bold();
+                                header.Cell().Background(Colors.Grey.Lighten3).Padding(5).Text("Location").Bold();
+                                header.Cell().Background(Colors.Grey.Lighten3).Padding(5).Text("Missile Type").Bold();
+                                header.Cell().Background(Colors.Grey.Lighten3).Padding(5).Text("Count").Bold();
+                                header.Cell().Background(Colors.Grey.Lighten3).Padding(5).Text("Failures").Bold();
+                                header.Cell().Background(Colors.Grey.Lighten3).Padding(5).Text("Fixed").Bold();
                             });
 
+                            // Enhanced row styling
                             foreach (var launcher in launchers)
                             {
                                 var hasUnfixedFailures = launcher.FailureCount > launcher.FixedFailures;
-                                var color = hasUnfixedFailures ? Colors.Red.Medium : Colors.Black;
+                                var rowColor = hasUnfixedFailures ? Colors.Red.Lighten4 : Colors.White;
+                                var textColor = hasUnfixedFailures ? Colors.Red.Darken1 : Colors.Grey.Darken3;
 
-                                table.Cell().Text(launcher.Id.ToString()).FontColor(color);
-                                table.Cell().Text(launcher.Code).FontColor(color);
-                                table.Cell().Text(launcher.Location).FontColor(color);
-                                table.Cell().Text(launcher.MissileType).FontColor(color);
-                                table.Cell().Text(launcher.MissileCount.ToString()).FontColor(color);
-                                table.Cell().Text(launcher.FailureCount.ToString()).FontColor(color);
-                                table.Cell().Text(launcher.FixedFailures.ToString()).FontColor(color);
+                                var isEvenRow = launchers.IndexOf(launcher) % 2 == 0;
+                                if (!hasUnfixedFailures)
+                                {
+                                    rowColor = isEvenRow ? Colors.White : Colors.Grey.Lighten4;
+                                }
+
+                                table.Cell().Background(rowColor).Padding(5).Text(launcher.Id.ToString()).FontColor(textColor);
+                                table.Cell().Background(rowColor).Padding(5).Text(launcher.Code).FontColor(textColor);
+                                table.Cell().Background(rowColor).Padding(5).Text(launcher.Location).FontColor(textColor);
+                                table.Cell().Background(rowColor).Padding(5).Text(launcher.MissileType).FontColor(textColor);
+                                table.Cell().Background(rowColor).Padding(5).Text(launcher.MissileCount.ToString()).FontColor(textColor);
+                                table.Cell().Background(rowColor).Padding(5).Text(launcher.FailureCount.ToString()).FontColor(textColor);
+                                table.Cell().Background(rowColor).Padding(5).Text(launcher.FixedFailures.ToString()).FontColor(textColor);
                             }
                         });
+
+                        // Footer
+                        page.Footer()
+                            .AlignCenter()
+                            .Text(text =>
+                            {
+                                text.Span("Page ").FontSize(10).FontColor(Colors.Grey.Medium);
+                                text.CurrentPageNumber().FontSize(10).FontColor(Colors.Grey.Medium);
+                                text.Span(" of ").FontSize(10).FontColor(Colors.Grey.Medium);
+                                text.TotalPages().FontSize(10).FontColor(Colors.Grey.Medium);
+                            });
                     });
                 }).GeneratePdf(filePath);
 

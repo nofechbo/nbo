@@ -6,7 +6,7 @@ using tcp;
 
 
 // Initialize any dependencies (like DatabaseHandler, RPS, etc.)
-var rps = new RPS(new DatabaseHandler(new MissileDbContext()));  // Assuming RPS requires DatabaseHandler
+var rps = new RPS(new DatabaseHandler());  
 var server = new TcpServer(rps);
 
 // Start the server asynchronously

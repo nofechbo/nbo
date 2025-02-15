@@ -12,7 +12,7 @@ namespace LauncherManagement
         private readonly LauncherListener _listener;
         private readonly HashSet<string> _trackedLaunchers = new();
         private bool _isPolling;
-        private Task _pollingTask;
+        private Task? _pollingTask;
         private readonly int _pollingIntervalMs = 500;
          private readonly DatabaseHandler _dbHandler; 
 
@@ -76,7 +76,7 @@ namespace LauncherManagement
             }
         }
 
-
+        //just for testing
         public void RemoveLauncher(string launcherCode)
         {
             using (var db = new MissileDbContext())
@@ -90,13 +90,8 @@ namespace LauncherManagement
                     db.MissileLaunchers.Remove(launcher);
                     // Save changes to the database
                     db.SaveChanges();
-
-                    Console.WriteLine($"✅ Launcher {launcherCode} removed from the database.");
                 }
-                else
-                {
-                    Console.WriteLine($"⚠️ Launcher with code {launcherCode} not found in the database.");
-                }
+                
             }
         }
 
