@@ -1,7 +1,7 @@
 # Project: Launchers Management System
 Owner: Nofech Ben Or
 
-Theis project simulates a logistic system that supports different missile launchers.
+This project simulates a logistic system that supports different missile launchers.
 this is a learning-project, aimed at understanding basic concepts in c#.
 
 the project consists of 4 main parts:
