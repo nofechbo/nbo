@@ -34,7 +34,7 @@ steps to run the project:
 3. run:
 	- run 'dotnet run' in "TCPServer" directory.
 	- run 'dotnet run' in "TCPClient" directory.
-The server and client will connect on `127.0.0.1:12345` by default.
+- The server and client will connect on `127.0.0.1:12345` by default.
 
 video demo:
 https://www.loom.com/share/d2b11072b4bd477bb06f7d59431d6ead?sid=2d278b86-39cd-4e10-b62c-cc9af058cd1e
@@ -47,7 +47,7 @@ https://www.loom.com/share/d2b11072b4bd477bb06f7d59431d6ead?sid=2d278b86-39cd-4e
 3. run:
 	- run 'dotnet run' in "TCPServer" directory.
 	- run 'dotnet run' in "LauncherManagement" directory.
-The server and client will connect on `127.0.0.1:12345` by default.
+- The server and client will connect on `127.0.0.1:12345` by default.
 
 video demo:
 https://www.loom.com/share/d587ab46ab07417fbadbd126c7e42031?sid=1e7fec62-0926-4ee0-9cb1-de81547e97e7
