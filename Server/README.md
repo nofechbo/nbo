@@ -36,6 +36,9 @@ steps to run the project:
 	run 'dotnet run' in "TCPClient" directory.
 - The server and client will connect on `127.0.0.1:12345` by default.
 
+video demo:
+https://www.loom.com/share/d2b11072b4bd477bb06f7d59431d6ead?sid=2d278b86-39cd-4e10-b62c-cc9af058cd1e
+
 
 ## Running the launcher client program:
 2. Build the project:
@@ -46,6 +49,8 @@ steps to run the project:
 	run 'dotnet run' in "LauncherManagement" directory.
 - The server and client will connect on `127.0.0.1:12345` by default.
 
+video demo:
+https://www.loom.com/share/d587ab46ab07417fbadbd126c7e42031?sid=1e7fec62-0926-4ee0-9cb1-de81547e97e7
 
 ## Running the Report-generator program:
 2. Build the project:
@@ -53,7 +58,8 @@ steps to run the project:
 3. run:
 	run 'dotnet run' in "ReportGenerator" directory.
 
-
+video demo:
+https://www.loom.com/share/6e6479f66ac04224bffdd0666028c89f?sid=8a2d71ed-7174-4a59-b101-f4ba7c98be36
 
 
 
