@@ -34,7 +34,7 @@ steps to run the project:
 3. run:
 	run 'dotnet run' in "TCPServer" directory.
 	run 'dotnet run' in "TCPClient" directory.
-** The server and client will connect on `127.0.0.1:12345` by default.
+- The server and client will connect on `127.0.0.1:12345` by default.
 
 
 ## Running the launcher client program:
@@ -44,7 +44,7 @@ steps to run the project:
 3. run:
 	run 'dotnet run' in "TCPServer" directory.
 	run 'dotnet run' in "LauncherManagement" directory.
-** The server and client will connect on `127.0.0.1:12345` by default.
+- The server and client will connect on `127.0.0.1:12345` by default.
 
 
 ## Running the Report-generator program:
