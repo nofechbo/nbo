@@ -23,6 +23,7 @@ namespace MyRPS
             _commandFactory.Add("UpdateLocation", args => new UpdateLocation(args!, dbHandler));
             _commandFactory.Add("SendMissiles", args => new SendMissiles(args!, dbHandler));
             _commandFactory.Add("SendTechnician", args => new SendTechnician(args!, dbHandler));
+            _commandFactory.Add("GetReport", args => new GetReport());
         }
 
         public async Task<string> HandleRequestAsync(string input)

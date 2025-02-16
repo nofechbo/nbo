@@ -17,10 +17,10 @@ namespace tcp
                 TcpClient client = new TcpClient(serverIp, port);
                 NetworkStream stream = client.GetStream();
 
-                string intro = "welcome to the launchers management system!\n" +
-                                "you can use the following commands:\n   🔄\"UpdateLocation\"\n   🚀\"SendMissiles\"\n   👨‍🔧\"SendTechnician\"\n" +
+                string intro = "\nwelcome to the launchers management system!\n" +
+                                "you can use the following commands:\n   🔄\"UpdateLocation\"\n   🚀\"SendMissiles\"\n   👨‍🔧\"SendTechnician\"\n"/*    📝\"GetReport\"\n"*/ +
                                 "\nplease type in your requests in the following format:\n" +
-                                "     command:launcher code,info";
+                                "     command:launcher_code,info\n";
                 Console.WriteLine(intro);
 
                 // Continuously send messages to the server

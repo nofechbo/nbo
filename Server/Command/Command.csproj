@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SQLDatabase\SQLDatabase.csproj" />
+    <ProjectReference Include="..\ReportGenerator\ReportGenerator.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

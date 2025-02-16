@@ -4,6 +4,7 @@
     <ProjectReference Include="..\RPS\RPS.csproj" />
     <ProjectReference Include="..\SQLDatabase\SQLDatabase.csproj" />
     <ProjectReference Include="..\Command\Command.csproj" />
+     <Compile Include="..\TcpServer\TcpServer.cs" />
   </ItemGroup>
 
   <PropertyGroup>
