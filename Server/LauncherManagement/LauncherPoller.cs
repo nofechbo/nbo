@@ -59,7 +59,7 @@ namespace LauncherManagement
             using (var db = new MissileDbContext())
             {
                 var newLaunchers = db.MissileLaunchers
-                    .Select(l => new Launcher(l.Code, l.Location, l.MissileType, _dbHandler))
+                    .Select(l => new Launcher(l.Code!, l.Location!, l.MissileType!, _dbHandler))
                     .ToList();
 
                 foreach (var launcher in newLaunchers)

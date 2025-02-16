@@ -167,8 +167,8 @@ namespace ReportGenerator
                             // Adjusted for landscape - put logo and title in a row
                             col.Item().Row(row =>
                             {
-                                row.RelativeItem().AlignCenter().Height(80)
-                                    .Image("rocket-launcher-logo-B51C8CAE2E-seeklogo.com.png", ImageScaling.FitArea);
+                                //row.RelativeItem().AlignCenter().Height(80)
+                                    //.Image("rocket-launcher-logo-B51C8CAE2E-seeklogo.com.png", ImageScaling.FitArea);
                                 
                                 row.RelativeItem().Column(titleCol =>
                                 {

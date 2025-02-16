@@ -39,6 +39,7 @@ public class LauncherTest
         launcher2.AlertMalfunction();
         await Task.Delay(3000);  // Wait longer for second TCP operation
 
-        
+        Console.WriteLine("Press any key to exit...");
+        Console.ReadKey();
     }
 }
