@@ -59,7 +59,7 @@ https://www.loom.com/share/d587ab46ab07417fbadbd126c7e42031?sid=1e7fec62-0926-4e
 	run 'dotnet run' in "ReportGenerator" directory.
 
 video demo:
-https://www.loom.com/share/6e6479f66ac04224bffdd0666028c89f?sid=8a2d71ed-7174-4a59-b101-f4ba7c98be36
+https://www.loom.com/share/e42737241fb24bebb542a20118f5ea15?sid=5ccece30-f3f2-4346-a373-6235d4c63d8b
 
 
 
