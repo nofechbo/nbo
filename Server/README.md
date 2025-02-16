@@ -18,10 +18,10 @@ To run this project, you need the following installed on your system:
 - **System.Net.Sockets**
 - **SQLite**
 - **QuestPDF**:
-Install using the following command:
-`dotnet add package QuestPDF`
+	- Install using the following command:
+	`dotnet add package QuestPDF`
 - **Entity Framework Core**: 
-Install using the following commands:
+	- Install using the following commands:
 `dotnet add package Microsoft.EntityFrameworkCore`
 `dotnet add package Microsoft.EntityFrameworkCore.Sqlite`
 
