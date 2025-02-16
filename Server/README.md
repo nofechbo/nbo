@@ -29,12 +29,12 @@ steps to run the project:
 
 ## Running the human client program:
 2. Build the project:
-	run `dotnet build` in "TCPServer" directory.
-	run `dotnet build` in "TCPClient" directory.
+	- run `dotnet build` in "TCPServer" directory.
+	- run `dotnet build` in "TCPClient" directory.
 3. run:
-	run 'dotnet run' in "TCPServer" directory.
-	run 'dotnet run' in "TCPClient" directory.
-- The server and client will connect on `127.0.0.1:12345` by default.
+	- run 'dotnet run' in "TCPServer" directory.
+	- run 'dotnet run' in "TCPClient" directory.
+The server and client will connect on `127.0.0.1:12345` by default.
 
 video demo:
 https://www.loom.com/share/d2b11072b4bd477bb06f7d59431d6ead?sid=2d278b86-39cd-4e10-b62c-cc9af058cd1e
@@ -42,12 +42,12 @@ https://www.loom.com/share/d2b11072b4bd477bb06f7d59431d6ead?sid=2d278b86-39cd-4e
 
 ## Running the launcher client program:
 2. Build the project:
-	run `dotnet build` in "TCPServer" directory.
-	run `dotnet build` in "LauncherManagement" directory.
+	- run `dotnet build` in "TCPServer" directory.
+	- run `dotnet build` in "LauncherManagement" directory.
 3. run:
-	run 'dotnet run' in "TCPServer" directory.
-	run 'dotnet run' in "LauncherManagement" directory.
-- The server and client will connect on `127.0.0.1:12345` by default.
+	- run 'dotnet run' in "TCPServer" directory.
+	- run 'dotnet run' in "LauncherManagement" directory.
+The server and client will connect on `127.0.0.1:12345` by default.
 
 video demo:
 https://www.loom.com/share/d587ab46ab07417fbadbd126c7e42031?sid=1e7fec62-0926-4ee0-9cb1-de81547e97e7
